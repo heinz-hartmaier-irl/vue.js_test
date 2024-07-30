@@ -1,0 +1,55 @@
+<html lang="fr">
+	<head>
+		<title>Premier Vue.js</title>
+		<meta charset="UTF-8" /> 
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
+	</head>
+	<body>
+		<div id="app">{{ message }}<br>
+            <input v-model="message">
+        </div>
+        
+        <div id="app_2">
+            <h2>Tableau</h2>
+            <table>
+                <tr v-for="(c, index) in contenue" :key="index">
+                    <td v-html="c.isDone ? '<u>' + c.text + '</u>' : c.text"></td>
+                    <td><button v-on:click="done(index)">Fait</button></td>
+                    <td><button v-on:click="remove(index)">Supprimer</button></td>
+                </tr>
+            </table>
+            <input v-model="newItem"><br>
+            <button v-on:click="add">Ajouter</button>
+        </div>
+
+        
+		<script type="text/javascript">
+			var app = new Vue({
+			  el: '#app',
+			  data: {
+                //variable liée ("binded"), chaque changement est répercuté sur l'affichage HTML
+			    message: 'Hello Vue !'
+			  }
+			});
+            var app_2 = new Vue({
+            el: '#app_2',
+            data: {
+                contenue: [],
+                newItem : '',
+            },
+            methods: {
+                add(){
+                        this.contenue.push({ text: this.newItem , isDone: false  });
+                        this.newItem = '';
+                },
+                remove(index){
+                    this.contenue.splice(index,1);
+                },
+                done(index){
+                    this.contenue[index].isDone = !this.contenue[index].isDone;
+                }
+            }
+            })
+		</script>
+	</body> 
+</html>
